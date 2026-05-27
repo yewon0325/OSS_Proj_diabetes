@@ -3,6 +3,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error
 
+import os
+import matplotlib.pyplot as plt
+
+# 한글 깨짐 방지 설정
+plt.rcParams["font.family"] = "Malgun Gothic"
+plt.rcParams["axes.unicode_minus"] = False
 
 # 1. 데이터셋 로드
 diabetes = load_diabetes()
@@ -40,3 +46,42 @@ mse = mean_squared_error(y_test, y_pred)
 
 print("GradientBoostingRegressor MSE:")
 print(mse)
+
+# 6. 테스트 데이터 일부 예측 결과 확인
+print("\n예측 결과 확인:")
+print("실제값\t예측값")
+
+for i in range(10):
+    print(f"{y_test[i]:.1f}\t{y_pred[i]:.1f}")
+
+
+# 7. 실제값과 예측값 비교 그래프
+plt.figure(figsize=(6, 6))
+plt.scatter(y_test, y_pred)
+
+# 실제값 = 예측값 기준선
+min_value = min(y_test.min(), y_pred.min())
+max_value = max(y_test.max(), y_pred.max())
+
+plt.plot(
+    [min_value, max_value],
+    [min_value, max_value],
+    linestyle="--"
+)
+
+plt.xlabel("실제값")
+plt.ylabel("예측값")
+plt.title("GradientBoostingRegressor 실제값과 예측값 비교")
+
+# 그래프 저장 폴더 생성
+os.makedirs("figures", exist_ok=True)
+
+# 그래프 저장
+plt.savefig(
+    "figures/GradientBoostingRegressor_실제값과_예측값_비교.png",
+    dpi=300,
+    bbox_inches="tight"
+)
+
+# 그래프 화면 출력
+plt.show()
