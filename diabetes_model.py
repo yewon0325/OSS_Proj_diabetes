@@ -58,3 +58,10 @@ plt.savefig("figures/실제값과 예측값 비교.png", dpi=300, bbox_inches="t
 
 # 그래프 화면 출력
 plt.show()
+
+# 7. 테스트 데이터 일부 예측 결과 확인
+print("\n예측 결과 확인:")
+print("실제값\t예측값")
+
+for i in range(10):
+    print(f"{y_test[i]:.1f}\t{y_pred[i]:.1f}")
